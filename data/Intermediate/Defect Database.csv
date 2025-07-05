@@ -1,0 +1,1883 @@
+No,REQ,req version,Detection Verified in spec,all table verified,Failure Familly, related,Failure type,Failure severity,SAFETY RELEVANT ?,Defect Name,Description,Monitored Data,DataFiltering / DataConsitency Mechanism,Defect running condition,Defect Frozen condition,Defect Stop condition,Defect Protection,PAR_EnumDefectDetectionType,Defect Detection Condition,No detect condition,PAR_[Defect_Name]_InitialState,Defect filtering CounterHi,Defect Filtering CounterLo,PAR_[Defect_Name]_Increment,PAR_[Defect_Name]_Decrement,[Defect_Name]_DefectEvaluationPeriod (ms),Typical comfirmation time (ms) information only,Typical time to deconfirm (ms) information only,Function inhibition management,PAR_[Defect_Name]_Reversibility,Defect reporting,Defect logging,PAR_[Defect_Name]_RetryAuthorization,PAR_[Defect_Name]_Reinitialize,Defect retry condition,PAR_[Defect_Name]_NbrOfEvalPeriodBtwRetries,Delay between retries,PAR_[Defect_Name]_NbrMaxRetry,PAR_[Defect_Name]_NbrOfEvalPeriodMaxInRetryPreparation,Max delay in retry preparation,PAR_[DefectName]_DiagnosticSupressionNumberOfPeriods,Defect retry action,Defect retry counter init,Defect retry succeed counter value,Defect retry failed counter value,Defect retry increment,Defect retry decrement,Defect supression time (ms),commentaire
+,,,,,,,,,,,,,"DataFiltering (e.g. Mean...)
+DataConsitency Mechanism (e.g. communication check)",,,,,"Description in F_Defect_Handler_Management chapter 2.1.4.4 Condition sets for Detection management configuration.
+DetectionType_1D ( Value1, Operator1)
+DetectionType_2DIN (Value1, Operator1, Value2, Operator2)
+DetectionType_2DOUT(Value1, Operator1, Value2, Operator2)
+DetectionType_2DHYST (Value1, Operator1, Value2, Operator2)
+DetectionType_2DDEADZONE (Value1, Operator1, Value2, Operator2)",,,,,,,,,,,,"In Defect confirmed state, the counter action will depend on the reversibility of the defect. 
+A defect that considered Reversible have a counter that can be decremented even in Confirmed state. 
+A not reversible Defect has a counter that cannot be decremented once confirmed.",,,,,,,,,,,,,,,,,,,
+1.0,LAMP_ECU_DEF_1,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_HBRIDGE1_ELEC_ERROR,HBridge controller #1 Error Pin State,Error Pin of HBridge controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+HBridge controller #1 activated",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR HBridge #1 is deactivated",HW,1D,Error Pin low,Error Pin high,DEF_HBRIDGE1_ELEC_ERROR_Absent,960.0,-1024.0,1.0,100.0,10.0,9600.0,200.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+Remark only on activated functions
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_HBridge1_ELEC_Defect,500,5000,3,500,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,60,
+2.0,LAMP_ECU_DEF_2,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH1OV,Detection state of the CH1 Output voltage fault of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost1 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH1OV is 1,CH1OV is 0,DEF_LED_BOOST_ELEC_CH1OV_Absent,127.0,-128.0,12.0,20.0,20.0,220.0,260.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+3.0,LAMP_ECU_DEF_3,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH2OV,Detection state of the CH2 Output voltage fault of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost2 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH2OV is 1,CH2OV is 0,DEF_LED_BOOST_ELEC_CH2OV_Absent,127.0,-128.0,12.0,20.0,20.0,220.0,260.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+4.0,LAMP_ECU_DEF_4,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH1OC,Detection state of the CH1 Output over current fault  of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost1 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH1OC is 1,CH1OC is 0,DEF_LED_BOOST_ELEC_CH1OC_Absent,127.0,-128.0,12.0,20.0,20.0,220.0,260.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+5.0,LAMP_ECU_DEF_5,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH2OC,Detection state of the CH2 Output over current fault  of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost2 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH2OC is 1,CH2OC is 0,DEF_LED_BOOST_ELEC_CH2OC_Absent,127.0,-128.0,12.0,20.0,20.0,220.0,260.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+6.0,LAMP_ECU_DEF_6,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH1ILIM,Detection state of the CH1 Cycle/Cycle switch current limit of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost1 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH1ILIM is 1,CH1ILIM is 0,DEF_LED_BOOST_ELEC_CH1ILIM_Absent,127.0,-128.0,12.0,20.0,20.0,220.0,260.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+7.0,LAMP_ECU_DEF_7,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_ELEC_CH2ILIM,Detection state of the CH2 Cycle/Cycle switch current limit of boost defect ,Error Pin of Boost controller,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost2 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,CH2ILIM is 1,CH2ILIM is 0,DEF_LED_BOOST_ELEC_CH2ILIM_Absent,127.0,-128.0,12.0,24.0,20.0,220.0,220.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+8.0,LAMP_ECU_DEF_8,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LED_BOOST_THERM_TW,Detection state of the Thermal warning at 150°C (typ.) ,Boost SPI data,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+Boost1 and Boost2 is not  defective
+And 
+DEF_LED_BOOST_COMM_SPIERROR not confirmed AND DEF_LED_BOOST_COMM_SILENTSPI not confirmed",Never,"Condition_GENERAL_UV_OV OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+OR Boost is deactivated",HW,1D,Boost TW is 1,Boost TW is 0,DEF_LED_BOOST_THERM_TW_Absent,127.0,-128.0,12.0,127.0,20.0,220.0,60.0,"Switch off boosts
+Switch off all bucks
+Set lighting (AFS / ADB / LVL / DBL) and signaing function failure flag",0,"Functionnal Failure flags to related outputs function's shall be reported on communication
+","DTC for Driver internal failure
+DTC for Related DCDC output function's failure",1.0,0.0,Activation_Condition_Boost_ELEC_Defect,500,10000,3,250,5000,6,"remove Function inhibition
+
+Retry attempt is performed according to the actual requested functions from the vehicle",50,0,100,1,1,120,
+9.0,LAMP_ECU_DEF_9,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LedDualBoost_CommSPE,Detection state of the SPE defect for Dual BOOST,Boost Mode State data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+",,,,1D,SPE is 1,SPE is 0,DEF_LedDualBoost_CommSPE_Absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,,1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+10.0,LAMP_ECU_DEF_10,1.0,F_CurrentRegulation,YES,,,,Electrical with function loss,Safety relevant,DEF_LedDualBoost_CommSILENT,Detection state of the missing spi communication defect for Dual BOOST,Boost Mode State data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+",,,,1D,CommSILENT is 1,CommSILENT is 0,DEF_LedDualBoost_CommSILENT_Absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,,1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+11.0,LAMP_ECU_DEF_11,1.0,F_CurrentRegulation,YES,,,,Thermal with Function loss,Safety relevant,DEF_LED_DualBUCK_1_THERM_CH1TP,DualBuck CH1 is thermal shut down,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+DEF_LED_DualBUCK_1_COMM_SPE not confirmed AND DEF_LED_DualBUCK_1_COMM_SILENT not confirmed",Never,Never,HW,1D,CH1TP is 1,CH1TP is 0,DEF_LED_DualBUCK_1_THERM_CH1TP_absent,127.0,-128.0,12.0,255.0,10.0,110.0,10.0,Buck channel1 switch OFF,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,Tj < Threshold,500,5000,3,500,5000,6,Remove inhibition action,1,0,,,,60,
+12.0,LAMP_ECU_DEF_12,1.0,F_CurrentRegulation,YES,,,,Thermal with Function loss,Safety relevant,DEF_LED_DualBUCK_1_THERM_CH2TP,DualBuck CH2 is thermal shut down,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+DEF_LED_DualBUCK_1_COMM_SPE not confirmed AND DEF_LED_DualBUCK_1_COMM_SILENT not confirmed",Never,Never,HW,1D,CH2TP is 1,CH2TP is 0,DEF_LED_DualBUCK_1_THERM_CH2TP_absent,127.0,-128.0,6.0,255.0,10.0,220.0,10.0,Buck channel2 switch OFF,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,1.0,Tj < Threshold,500,5000,3,500,5000,6,Remove inhibition action,1,0,,,,60,
+13.0,LAMP_ECU_DEF_13,1.0,F_CurrentRegulation,YES,,,,Communication with function loss,Safety relevant,DEF_LED_DualBUCK_1_COMM_SPE,"DualBuck communication is incorrect
+OR Readback error",SPI data,?,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND Buck channel active  ",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+Buck channel deactivated",none,1D,SPE is 1 OR Readback error,SPE is 0 AND Readback OK,DEF_LED_DualBUCK_1_COMM_SPE_absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,"Switch the Buck into FSO
+SET FSO",1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+14.0,LAMP_ECU_DEF_14,1.0,F_CurrentRegulation,YES,,,,Communication with function loss,Safety relevant,DEF_LED_DualBUCK_1_COMM_SILENT,DualBuck communication is SILENT,presence of SPI data,?,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND Buck channel active  ",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+Buck channel deactivated",none,1D,NO SPI,SPI present,DEF_LED_DualBUCK_1_COMM_SILENT_absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,"Even if the buck go in FSO by itself the buck driver shall request set FSO
+SET FSO",1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+15.0,LAMP_ECU_DEF_15,1.0,F_CurrentRegulation,YES,,,,State with function loss,Safety relevant,DEF_LED_DualBUCK_1_STATE_PC,A power cycle has occured on the DualBUCK,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+DEF_LED_DualBUCK_1_COMM_SPE not confirmed AND DEF_LED_DualBUCK_1_COMM_SILENT not confirmed",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+at least one BOOST_Defect_Present""
+
+PB SBC ? ",none,1D,PC is 1,PC is 0,DEF_LED_DualBUCK_1_STATE_PC_absent,127.0,-128.0,10.0,255.0,10.0,130.0,10.0,,0,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,"Condition_GENERAL_UV_OV  
+OR
+Diagnostic supression time has not elapsed
+OR
+at least one BOOST_Defect_Present""",500,5000,3,500,5000,2,"reinitialise this DualBuck
+and remove Function inhibition",25,0,50,2,1,20,
+16.0,LAMP_ECU_DEF_16,1.0,F_CurrentRegulation,YES,,,,State with function loss,Safety relevant,DEF_LED_DualBUCK_1_STATE_STANDALONE,The Dualbuck is not in the correct state (stand alone is a HW commanding way),SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+DEF_LED_DualBUCK_1_COMM_SPE not confirmed AND DEF_LED_DualBUCK_1_COMM_SILENT not confirmed",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+",HW,1D,StandAlone is 1,StandAlone is 0,DEF_LED_DualBUCK_1_STATE_STANDALONE_absent,127.0,-128.0,10.0,255.0,10.0,130.0,10.0,Stop the buck channel,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,Condition_GENERAL_UV_OV  ,500,5000,3,500,5000,2,"reinitialise this DualBuck
+and remove Function inhibition",25,0,50,2,1,20,
+17.0,LAMP_ECU_DEF_17,1.0,F_CurrentRegulation,YES,,,,Thermal with Function loss,Safety relevant,DEF_LED_DualBUCK_2_THERM_CH1TP,DualBuck CH1 is thermal shut down,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+DEF_LED_DualBUCK_2_COMM_SPE not confirmed AND DEF_LED_DualBUCK_2_COMM_SILENT not confirmed",Never,Never,HW,1D,CH1TP is 1,CH1TP is 0,DEF_LED_DualBUCK_2_THERM_CH1TP_absent,127.0,-128.0,12.0,255.0,10.0,110.0,10.0,Buck channel1 switch OFF,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,Tj < Threshold,500,5000,3,500,5000,1,Remove inhibition action,1,0,,,,10,
+18.0,LAMP_ECU_DEF_18,1.0,F_CurrentRegulation,YES,,,,Thermal with Function loss,Safety relevant,DEF_LED_DualBUCK_2_THERM_CH2TP,DualBuck CH2 is thermal shut down,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+DEF_LED_DualBUCK_2_COMM_SPE not confirmed AND DEF_LED_DualBUCK_2_COMM_SILENT not confirmed",Never,Never,HW,1D,CH2TP is 1,CH2TP is 0,DEF_LED_DualBUCK_2_THERM_CH2TP_absent,127.0,-128.0,6.0,255.0,10.0,220.0,10.0,Buck channel2 switch OFF,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,1.0,Tj < Threshold,500,5000,3,500,5000,1,Remove inhibition action,1,0,,,,10,
+19.0,LAMP_ECU_DEF_19,1.0,F_CurrentRegulation,YES,,,,Communication with function loss,Safety relevant,DEF_LED_DualBUCK_2_COMM_SPE,"DualBuck communication is incorrect
+OR Readback error",SPI data,?,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND Buck channel active  ",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+Buck channel deactivated",none,1D,SPE is 1 OR Readback error,SPE is 0 AND Readback OK,DEF_LED_DualBUCK_2_COMM_SPE_absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,"Switch the Buck into FSO
+SET FSO",1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+20.0,LAMP_ECU_DEF_20,1.0,F_CurrentRegulation,YES,,,,Communication with function loss,Safety relevant,DEF_LED_DualBUCK_2_COMM_SILENT,DualBuck communication is SILENT,presence of SPI data,?,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND Buck channel active  ",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+Buck channel deactivated",none,1D,NO SPI,SPI present,DEF_LED_DualBUCK_2_COMM_SILENT_absent,1023.0,-1024.0,50.0,1024.0,10.0,210.0,20.0,"Even if the buck go in FSO by itself the buck driver shall request set FSO
+SET FSO",1,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+21.0,LAMP_ECU_DEF_21,1.0,F_CurrentRegulation,YES,,,,State with function loss,Safety relevant,DEF_LED_DualBUCK_2_STATE_PC,A power cycle has occured on the DualBUCK,SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+DEF_LED_DualBUCK_2_COMM_SPE not confirmed AND DEF_LED_DualBUCK_2_COMM_SILENT not confirmed",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+at least one BOOST_Defect_Present""
+
+PB SBC ? ",none,1D,PC is 1,PC is 0,DEF_LED_DualBUCK_2_STATE_PC_absent,127.0,-128.0,10.0,255.0,10.0,130.0,10.0,,0,Functionnal failure flag of the function linked to this buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,"Condition_GENERAL_UV_OV  
+OR
+Diagnostic supression time has not elapsed
+OR
+at least one BOOST_Defect_Present""",500,5000,3,500,5000,2,"reinitialise this DualBuck
+and remove Function inhibition",25,0,50,2,1,20,
+22.0,LAMP_ECU_DEF_22,1.0,F_CurrentRegulation,YES,,,,State with function loss,Safety relevant,DEF_LED_DualBUCK_2_STATE_STANDALONE,The Dualbuck is not in the correct state (stand alone is a HW commanding way),SPI data,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+DEF_LED_DualBUCK_2_COMM_SPE not confirmed AND DEF_LED_DualBUCK_2_COMM_SILENT not confirmed",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+",HW,1D,StandAlone is 1,StandAlone is 0,DEF_LED_DualBUCK_2_STATE_STANDALONE_absent,127.0,-128.0,10.0,255.0,10.0,130.0,10.0,Stop the buck channel,0,Functionnal failure flag of the function linked to this Buck channel,"DTC of internal buck fault for this buck channel
+DTC of this buck channel function",1.0,0.0,Condition_GENERAL_UV_OV  ,500,5000,3,500,5000,2,"reinitialise this DualBuck
+and remove Function inhibition",25,0,50,2,1,20,
+23.0,LAMP_ECU_DEF_23,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_1_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+LED_LOAD_2 No Opencircuit
+AND 
+LEDOUT X is Activated
+HBridge CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,2D,VLED1 <PAR_VoltLedOutScThreshold_OUT1 && VLED2 < PAR_VoltLedOutOcThreshold_OUT2 ,VLED1 >=PAR_VoltLedOutScThreshold_OUT1  or VLED2 > PAR_VoltLedOutOcThreshold_OUT2 ,DEF_LED_LOAD_1_SHORTCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+24.0,LAMP_ECU_DEF_24,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_2_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+LED_LOAD_1 No Opencircuit
+AND 
+LEDOUT X is Activated
+HBridge CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,2D,VLED2 <PAR_VoltLedOutScThreshold_OUT2 && VLED1 < PAR_VoltLedOutOcThreshold_OUT1 ,VLED2 >=PAR_VoltLedOutScThreshold_OUT2  or VLED1 > PAR_VoltLedOutOcThreshold_OUT1 ,DEF_LED_LOAD_2_SHORTCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+25.0,LAMP_ECU_DEF_25,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_3_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",SPI check,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT X is Activated
+AND 
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,1D,VLED < PAR_VoltLedOutScThreshold_OUTX,VLED >=PAR_VoltLedOutScThreshold_OUTX,DEF_LED_LOAD_3_SHORTCIRCUIT_absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,-,500,5000,255,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+26.0,LAMP_ECU_DEF_26,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_4_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",SPI check,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT X is Activated
+AND 
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,1D,VLED <PAR_VoltLedOutScThreshold_OUTX,VLED >= PAR_VoltLedOutScThreshold_OUTX,DEF_LED_LOAD_4_SHORTCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,-,500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+27.0,LAMP_ECU_DEF_27,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_5_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",SPI check,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT X is Activated
+AND 
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,1D,"VLED <PAR_VoltLedOutScThreshold_OUTX
+ Continue reading the voltage 5 times.","VLED >= PAR_VoltLedOutScThreshold_OUTX
+ Continue reading the voltage 5 times.",DEF_LED_LOAD_5_SHORTCIRCUIT_absent,960.0,-1024.0,40.0,1024.0,40.0,960.0,80.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,0.0,1.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+28.0,LAMP_ECU_DEF_28,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_6_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",SPI check,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT X is Activated
+AND 
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,1D,VLED <PAR_VoltLedOutScThreshold_OUTX,VLED >=PAR_VoltLedOutScThreshold_OUTX,DEF_LED_LOAD_6_SHORTCIRCUIT_absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,-,500,5000,255,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+29.0,LAMP_ECU_DEF_29,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_7_SHORTCIRCUIT,The LED connected to the LEDOUT X is partially or fully shortcircuited,"Buck SPI data
+VLED of the corresponding LEDOUT X",SPI check,"Condition_GENERAL_UV_OV   AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT X is Activated
+AND 
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV  OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X short Defect is disabled
+OR
+LEDOUT X is Deactivated""
+OR Buck CHannel has defect",HW,1D,VLED <PAR_VoltLedOutScThreshold_OUTX,VLED >=PAR_VoltLedOutScThreshold_OUTX,DEF_LED_LOAD_7_SHORTCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation
+
+discussion a avoir sur les différentes reactions demandés par le client / reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,-,500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+30.0,LAMP_ECU_DEF_30,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_1_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+
+AND 
+LEDOUT X is Activated
+HBridge CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_1_OPENCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+31.0,LAMP_ECU_DEF_31,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_2_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+
+AND 
+LEDOUT X is Activated
+HBridge CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_2_OPENCIRCUIT_absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+32.0,LAMP_ECU_DEF_32,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_3_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_3_OPENCIRCUIT_absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,-,500,5000,255,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+33.0,LAMP_ECU_DEF_33,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_4_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_4_OPENCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,-,500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+34.0,LAMP_ECU_DEF_34,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_5_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,"VLED >PAR_VoltLedOutOcThreshold_OUTX
+ Continue reading the voltage 5 times.","VLED <=PAR_VoltLedOutOcThreshold_OUTX
+ Continue reading the voltage 5 times.",DEF_LED_LOAD_5_OPENCIRCUIT_absent,960.0,-1024.0,40.0,1024.0,40.0,960.0,80.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,0.0,1.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+35.0,LAMP_ECU_DEF_35,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_6_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_6_OPENCIRCUIT_absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,-,500,5000,255,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+36.0,LAMP_ECU_DEF_36,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_LED_LOAD_7_OPENCIRCUIT,The LED connected to the LEDOUT X is Open load,Buck SPI data VLED of the corresponding LEDOUT X,SPI check,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck CHannel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,VLED >PAR_VoltLedOutOcThreshold_OUTX,VLED <=PAR_VoltLedOutOcThreshold_OUTX,DEF_LED_LOAD_7_OPENCIRCUIT_absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,-,500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+37.0,LAMP_ECU_DEF_37,1.0,"F_CurrentRegulation
+",YES,,,,Elec with function loss,Safety relevant,DEF_StuckOpenError_HBridge_SW2,The Defect status of the HBridge control switches,ADC data,HW,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND 
+LEDOUT X is Activated
+Buck Channel has no defect",Never,"Condition_GENERAL_UV_OV   OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+BOOST_Defect_Present
+OR
+LEDOUT X is Deactivated
+OR buck channel has defect",HW,1D,V_sw_i > PAR_VoltSwDefectValidated,V_sw_i <= PAR_VoltSwDefectValidated,DEF_StuckOpenError_HBridge_SW2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,"Shut OFF LEDOUT X
+Set Function failure flag or not depends on reglementation
+
+a configurer en fonction de la reglementation",0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func1,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func1_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+39.0,LAMP_ECU_DEF_39,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func2,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func2_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+40.0,LAMP_ECU_DEF_40,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func3,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func3_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+41.0,LAMP_ECU_DEF_41,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func4,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func4_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+42.0,LAMP_ECU_DEF_42,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func5,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func5_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+43.0,LAMP_ECU_DEF_43,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func6,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func6_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+44.0,LAMP_ECU_DEF_44,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func7,The Temeprature sensor for LOAD X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func7_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func8,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func8_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func9,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func9_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func10,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func10_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func11,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func11_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func12,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func12_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func13,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func13_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func14,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func14_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+38.0,LAMP_ECU_DEF_38,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LED_TEMPSENSOR_Func15,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolNtcFailOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolNtcFailOut_Func_X=FALSE),DEF_LED_TEMPSENSOR_Func15_absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func1,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func1_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func2,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func2_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func3,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func3_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func4,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func4_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func5,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func5_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func6,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func6_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func7,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func7_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func8,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func8_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func9,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func9_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func10,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func10_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func11,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func11_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func12,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func12_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func13,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func13_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func14,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func14_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+45.0,LAMP_ECU_DEF_45,1.0,F_BIN_NTC_Allocation,YES,,,,Degraded function,Safety relevant,DEF_LedThermalShutdown_Func15,The Temeprature sensor for Func X returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+DEF_LED_TEMPSENSOR_Func_X= FALSE",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,2D,Temp failure from thermal(BNA_BoolLedThermalShutdownOut_Func_X=TRUE),Temp in the range Max temp / Min temp(BNA_BoolLedThermalShutdownOut_Func_X=FALSE),DEF_LedThermalShutdown_Func15_Absent,960.0,-1024.0,1.0,2.0,10.0,9600.0,9920.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this LED temperature 
+if possible",DTC for LEDOUT temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+52.0,LAMP_ECU_DEF_52,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out1,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out1_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+53.0,LAMP_ECU_DEF_53,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out2,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out2_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+54.0,LAMP_ECU_DEF_54,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out3,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+ECUB_voltage_Range_ 8V_ to_18V",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out3_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+55.0,LAMP_ECU_DEF_55,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out4,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+ECUB_voltage_Range_ 8V_ to_18V",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out4_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+56.0,LAMP_ECU_DEF_56,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out5,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+ECUB_voltage_Range_ 8V_ to_18V",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out5_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,1.0,"Condition_GENERAL_UV_OV  
+AND
+Diagnostic supression time elapsed
+AND
+No BOOST_Defect_Present
+AND
+LEDOUT X short Defect is enabled
+AND 
+LEDOUT reactivation is requested",500,5000,3,500,5000,3,remove inhibition ,25,0,50,2,1,30,
+57.0,LAMP_ECU_DEF_57,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out6,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+ECUB_voltage_Range_ 8V_ to_18V",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out6_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+58.0,LAMP_ECU_DEF_58,1.0,F_Function_Distribution_And_Activation_Management,YES,,,,Degraded function,Safety relevant,DEF_Mlc_LED_OCSC_Out7,This output contains the all the function control by the MLC open circuit or short circuit defect validated flag for LED Outs,MLC data,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ LEDOUT X is activated
+AND
+ diagnostic supression time has elapsed
+AND
+ECUB_voltage_Range_ 8V_ to_18V",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,All Function control by MLC alocated at the Out is defected,The case other than defect detected,DEF_Mlc_LED_OCSC_Out7_Absent,960.0,-1024.0,10.0,2048.0,10.0,960.0,10.0,force LEDOUT derating,0,Functionnal failure flag of the function linked to this LEDOUT X,DTC of this channel function,1.0,0.0,"DEF_Driver_ELEC_UV_absent     
+and   
+DEF_Driver_ELEC_OV_absent     
+and   
+Boost is not  defective   
+and     
+DEF_Driver_ELEC_RANGEREADYNESS_absent ",500,5000,3,500,5000,3,,,,,,,,
+59.0,LAMP_ECU_DEF_59,1.0,I_NTC_interface,YES,,,,Degraded function,Safety relevant,DEF_DriverNTC_TEMPSENSOR1,The Temeprature sensor for Driver NTC returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,Temp failure from thermal,Temp in the range Max temp / Min temp,DEF_DriverNTC_TEMPSENSOR1_absent,960.0,-1024.0,5.0,2048.0,50.0,9600.0,50.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this Driver temperature 
+if possible",DTC for Driver NTC temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+60.0,LAMP_ECU_DEF_60,1.0,I_NTC_interface,YES,,,,Degraded function,Safety relevant,DEF_DriverNTC_TEMPSENSOR2,The Temeprature sensor for Driver NTC returns a Temperature out of range values,temperature value,mean on 8 samples,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed",Never,"Condition_GENERAL_UV_OV  _present OR DEF_Driver_ELEC_RANGEREADINESS_confirmed
+OR
+Diagnostic supression time has not elapsed
+OR
+LEDOUT X is Deactivated""",HW,1D,Temp failure from thermal,Temp in the range Max temp / Min temp,DEF_DriverNTC_TEMPSENSOR2_absent,960.0,-1024.0,5.0,2048.0,50.0,9600.0,50.0,force LEDOUT derating,1,"Functionnal failure flag of the function linked to this Driver temperature 
+if possible",DTC for Driver NTC temperature ,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+61.0,LAMP_ECU_DEF_61,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_1,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_1_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+62.0,LAMP_ECU_DEF_62,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_2,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_2_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+63.0,LAMP_ECU_DEF_63,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_3,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_3_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+64.0,LAMP_ECU_DEF_64,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_4,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_4_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+65.0,LAMP_ECU_DEF_65,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_5,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_5_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+66.0,LAMP_ECU_DEF_66,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_6,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_6_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+67.0,LAMP_ECU_DEF_67,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_7,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_7_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+68.0,LAMP_ECU_DEF_68,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_8,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_8_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+69.0,LAMP_ECU_DEF_69,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_9,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_9_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+70.0,LAMP_ECU_DEF_70,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_10,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_10_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+71.0,LAMP_ECU_DEF_71,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_11,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_11_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+72.0,LAMP_ECU_DEF_72,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_12,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_12_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+73.0,LAMP_ECU_DEF_73,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_13,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_13_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+74.0,LAMP_ECU_DEF_74,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_14,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_14_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+75.0,LAMP_ECU_DEF_75,1.0,F_BIN_NTC_Allocation,YES,,,in,Degraded function,?,DEF_BoolBinFailureOut_Func_15,"BNA_BoolBinFailureOut_Func[1to15]:
+This output contains the flag for bin reading failure status for function",Confirmed BIN value,HW,BIN is confirmed,Never,BIN is not confirmed,HW,1D,BNA_BoolBinFailureOut_Func_X=TRUE,BNA_BoolBinFailureOut_Func_X=FALSE,DEF_BoolBinFailureOut_Func_15_absent,960.0,-1024.0,1.0,10.0,10.0,9600.0,1990.0,Saved Current usage,1,"Functionnal failure flag of the function linked to this LED BIN
+if possible",DTC for LEDOUT BIN,0.0,0.0,-,-,-,-,-,-,-,-,-,-,-,-,-,-,
+76.0,LAMP_ECU_DEF_76,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH1_OVERCURRENT,overcurrent detected at Smart channel 1,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,Smart is deactivated / Condition_GENERAL_UV_OV  / smart is not present on the board,HW,1D,measured value >= Overcurrent threshold,measured vaue < Overcurrent threshold,DEF_SMART_CH1_OVERCURRENT_absent,960.0,-1024.0,13.0,2048.0,40.0,2960.0,40.0,switch off this smart channel,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+77.0,LAMP_ECU_DEF_77,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH1_LOWCURRENT,Lowcurrent detected at Smart channel 1,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,Smart is deactivated / Condition_GENERAL_UV_OV  / smart is not present on the board,HW,1D,measured value <=low currentthreshold,measured vaue > Lowcurrent threshold,DEF_SMART_CH1_LOWCURRENT_absent,960.0,-1024.0,13.0,2048.0,40.0,2960.0,40.0,switch off this smart channel,0,CAN signal of related function,DTC for smart,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+78.0,LAMP_ECU_DEF_78,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH2_OVERCURRENT,overcurrent detected at Smart channel 2,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value >= Overcurrent threshold,measured vaue < Overcurrent threshold,DEF_SMART_CH2_OVERCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+79.0,LAMP_ECU_DEF_79,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH2_LOWCURRENT,Lowcurrent detected at Smart channel 2,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value <=low currentthreshold,measured vaue > Lowcurrent threshold,DEF_SMART_CH2_LOWCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+80.0,LAMP_ECU_DEF_80,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH3_OVERCURRENT,overcurrent detected at Smart channel 3,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value >= Overcurrent threshold,measured vaue < Overcurrent threshold,DEF_SMART_CH3_OVERCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+81.0,LAMP_ECU_DEF_81,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH3_LOWCURRENT,Lowcurrent detected at Smart channel 3,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value <=low currentthreshold,measured vaue > Lowcurrent threshold,DEF_SMART_CH3_LOWCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+82.0,LAMP_ECU_DEF_82,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH4_OVERCURRENT,overcurrent detected at Smart channel 4,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value >= Overcurrent threshold,measured vaue < Overcurrent threshold,DEF_SMART_CH4_OVERCURRENT_absent,960.0,-1024.0,1.0,600.0,10.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,2,remove fault inhibition,50,0,100,1,2,20,
+83.0,LAMP_ECU_DEF_83,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH4_LOWCURRENT,Lowcurrent detected at Smart channel 4,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value <=low currentthreshold,measured vaue > Lowcurrent threshold,DEF_SMART_CH4_LOWCURRENT_absent,960.0,-1024.0,1.0,600.0,10.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,2,remove fault inhibition,50,0,100,1,2,20,
+84.0,LAMP_ECU_DEF_84,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH5_OVERCURRENT,overcurrent detected at Smart channel 5,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value >= Overcurrent threshold,measured vaue < Overcurrent threshold,DEF_SMART_CH5_OVERCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+85.0,LAMP_ECU_DEF_85,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH5_LOWCURRENT,Lowcurrent detected at Smart channel 5,ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+HSS_X_Activ 
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,measured value <=low currentthreshold,measured vaue > Lowcurrent threshold,DEF_SMART_CH5_LOWCURRENT_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,130,5200,3,130,5200,2,remove fault inhibition,50,0,100,1,2,80,
+86.0,LAMP_ECU_DEF_86,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH1CH2_OVERTEMP,"Overtemp for SMart chip ch1,2",ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,,,DEF_SMART_CH1CH2_OVERTEMP_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+87.0,LAMP_ECU_DEF_87,1.0,F_Power_Switch,YES,,,,Function loss,Safety relevant,DEF_SMART_CH3CH5_OVERTEMP,"Overtemp for Smart chip ch3,5",ADC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,,,DEF_SMART_CH3CH5_OVERTEMP_absent,960.0,-1024.0,4.0,2048.0,40.0,9600.0,40.0,,0,CAN signal of related function,DTC for smart,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+88.0,LAMP_ECU_DEF_88,1.0,I_Power Supply Interface,YES,,,,Power range with function loss,Safety relevant,DEF_DRIVER_ELEC_UV_ECUB,General UV for Driver,Selected power input voltage  (depends on which switch is closed / open),HW,Always,Never,never,HW,1D,Measured voltage at input is lower than PAR_UVValidThreshold,Measured voltage at input is higher than PAR_UVunValidThreshold,DEF_Driver_ELEC_UV_absent,127.0,-128.0,4.0,7.0,5.0,160.0,185.0,"Switch OFF boost / buck
+freeze Steppers
+Switch off Smart
+",1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+89.0,LAMP_ECU_DEF_89,1.0,I_Power Supply Interface,YES,,,,Power range with function loss,Safety relevant,DEF_DRIVER_ELEC_OV_ECUB,General OV for Driver,Slected power input voltage  (depends on which switch is closed / open),HW,Always,Never,never,HW,1D,Measured voltage at input is higher than PAR_OVValidThreshold,Measured voltage at input is lower than PAR_OVunValidThreshold,DEF_Driver_ELEC_OV_absent,127.0,-128.0,4.0,7.0,5.0,160.0,185.0,"Switch OFF boost / buck
+Switch OFF Steppers
+Sxitch off smart",1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+90.0,LAMP_ECU_DEF_90,1.0,I_Power Supply Interface,YES,,,,Power range is not ready,Safety relevant,DEF_DRIVER_ELEC_RANGEREADYNESS,At start consider we have a UV or OV,Selected power input voltage (depends on which switch is closed / open),HW,DEF_Driver_ELEC_RANGEREADYNESS has never been Absent,Never,DEF_Driver_ELEC_RANGEREADYNESS is absent,HW,2D,Measured voltage at input is lower than PAR_UVValidThreshold or higher than PAR_OVValidThreshold,Measured voltage at input is between PAR_UVunValidThreshold and PAR_OVunValidThreshold,DEF_Driver_ELEC_RANGEREADYNESS_confirmed,127.0,-128.0,45.0,256.0,5.0,15.0,5.0,"Switch OFF boost / buck
+Switch OFF Steppers
+Switch off smarts",1,Function status if possible,none,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+91.0,LAMP_ECU_DEF_91,1.0,FRS SAT 5V supply,YES,,,,Elec with lost function,Safety relavant,DEF_LDO_5VOPSAT_OUTOFRANGE1,The 5V power Supply is out of range,ADC data,HW,,Never,,HW,1D,V_reset is Low,V_reset is High,DEF_LDO_5VOPSAT_OUTOFRANGE1_absent,127.0,-128.0,6.0,127.0,10.0,220.0,30.0,"(TPS switch ON when 5V loss)
+none",0,,,1.0,0.0,,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+92.0,LAMP_ECU_DEF_92,1.0,FRS OpenCollector Frequency signal,YES,,,,Function loss,Safety relevant,DEF_FAN_DIAGFREQUENCY_WorkOUTOFRANGE1,issue with FAN DIAG frequency,FAN frequency,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+FAN1_Activ",Never,,HW,2D,When the FreqValX is not in between  [PAR_MinFreqWorkingDiagX ; PAR_MaxFreqWorkingDiagX] ,When the FreqValX is in between  [PAR_MinFreqWorkingDiagX ; PAR_MaxFreqWorkingDiagX] ,DEF_FAN_DIAGFREQUENCY_WorkOUTOFRANGE1_absent,127.0,-128.0,13.0,255.0,1000.0,10000.0,1000.0,,0,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,5000,3,5,5000,1,remove fault inhibition,50,0,100,1,2,1000,
+93.0,LAMP_ECU_DEF_93,1.0,FRS OpenCollector Frequency signal,YES,,,,Function loss,Safety relevant,DEF_FAN_DIAGFREQUENCY_WorkOUTOFRANGE2,issue with FAN DIAG frequency,FAN frequency,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+FAN2_Activ",Never,,HW,2D,When the FreqValX is not in between  [PAR_MinFreqWorkingDiagX ; PAR_MaxFreqWorkingDiagX] ,When the FreqValX is in between  [PAR_MinFreqWorkingDiagX ; PAR_MaxFreqWorkingDiagX] ,DEF_FAN_DIAGFREQUENCY_WorkOUTOFRANGE2_absent,127.0,-128.0,13.0,255.0,1000.0,10000.0,1000.0,,0,Function status if possible,none,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,5000,3,5,5000,1,remove fault inhibition,50,0,100,1,2,1000,
+94.0,LAMP_ECU_DEF_94,1.0,FRS OpenCollector Frequency signal,YES,,,,Function loss,Safety relevant,DEF_FAN_DIAGFREQUENCY_NotWorkOUTOFRANGE1,issue with FAN DIAG frequency,FAN frequency,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+FAN1_NotActiv",Never,,HW,1D,Bigger than PAR_MaxFreqNotWorkingDiag,Equal or smaller than PAR_MaxFreqNotWorkingDiag,DEF_FAN_DIAGFREQUENCY_NotWorkOUTOFRANGE1_absent,127.0,-128.0,13.0,255.0,1000.0,10000.0,1000.0,,0,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,5000,3,5,5000,1,remove fault inhibition,50,0,100,1,2,1000,
+95.0,LAMP_ECU_DEF_95,1.0,FRS OpenCollector Frequency signal,YES,,,,Function loss,Safety relevant,DEF_FAN_DIAGFREQUENCY_NotWorkOUTOFRANGE2,issue with FAN DIAG frequency,FAN frequency,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+FAN2_NotActiv",Never,,HW,1D,Bigger than PAR_MaxFreqNotWorkingDiag,Equal or smaller than PAR_MaxFreqNotWorkingDiag,DEF_FAN_DIAGFREQUENCY_NotWorkOUTOFRANGE2_absent,127.0,-128.0,13.0,255.0,1000.0,10000.0,1000.0,,0,Function status if possible,none,1.0,1.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,5000,3,5,5000,1,remove fault inhibition,50,0,100,1,2,1000,
+96.0,LAMP_ECU_DEF_96,1.0,F_Dynamic_Leveling_Management,YES,,,,Function loss,Safety relevant,DEF_LinFail,The LIN communication failure,LIN bus Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Dynamic Leveling_Needed",Never,,HW,1D,LIN bus communication Error,LIN bus communication Normal,DEF_LinFail_Absent,127.0,-128.0,6.0,255.0,500.0,11000.0,500.0,,1,Function status if possible,none,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+97.0,LAMP_ECU_DEF_97,1.0,F_Dynamic_Leveling_Management,YES,,,,Function loss,Safety relevant,DEF_DhlFail_Motor,The Dynamic Leveling Motor failure,DHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Dynamic Leveling_Activ",,,,1D,DHL Motor Error(D7)=1,DHL Motor Normal=0,DEF_DhlFail_Motor_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+98.0,LAMP_ECU_DEF_98,1.0,F_Dynamic_Leveling_Management,YES,,,,Function loss,Safety relevant,DEF_DhlFail_Sensor,The Dynamic Leveling Sensor control failure,DHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Dynamic Leveling_Activ",,,,1D,DHL Sensor Error(D6)=1,DHLSensor Normal=0,DEF_DhlFail_Sensor_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+99.0,LAMP_ECU_DEF_99,1.0,F_Dynamic_Leveling_Management,YES,,,,Function loss,Safety relevant,DEF_DhlFail_PowerSupply,The Dynamic Leveling Power supply voltage out of range ,DHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Dynamic Leveling_Needed",,,,1D,DHL PowerSupply Voltage Error(D5)=1,DHL PowerSupply Voltage Normal(D5)=0,DEF_DhlFail_PowerSupply_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,1,0,0,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+100.0,LAMP_ECU_DEF_100,1.0, F_Output_Signal_Analog_Voltage,YES,,,,Function loss,Safety relevant,DEF_DaSignalShortToPwr,D/A signal line short to Power,SHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Static Leveling_Activ",,,,1D,DA_Volt_DaSignalOut>  INP_Volt_IPD4-PAR_VoltSCtoPwrTol,DA_Volt_DaSignalOut<=  INP_Volt_IPD4-PAR_VoltSCtoPwrTol,DEF_DaSignalShortToPwr_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,255,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+101.0,LAMP_ECU_DEF_101,1.0, F_Output_Signal_Analog_Voltage,YES,,,,Function loss,Safety relevant,DEF_DaSignalShortToGnd,D/A signal line short to Ground,SHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Static Leveling_Activ",,,,1D,DA_Volt_DaSignalOut< PAR_VoltSCtoGndTol   ,DA_Volt_DaSignalOut>= PAR_VoltSCtoGndTol   ,DEF_DaSignalShortToGnd_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,255,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+102.0,LAMP_ECU_DEF_102,1.0, F_Output_Signal_Analog_Voltage,YES,,,,Function loss,Safety relevant,DEF_ShlPwrOutOfRange,D/A signal input power out of range(8V to 18V),SHL Failure,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Static Leveling_Needed",,,,2D,In case POWI_VoltPowersupplyFilt_ECUB is higher than PAR_Voltfunction_High+PAR_VoltHyst or the  POWI_VoltPowersupplyFilt_ECUB  is lower than PAR_Voltfunction_Low-PAR_VoltHyst,In case POWI_VoltPowersupplyFilt_ECUB is lower than PAR_Voltfunction_High and the  POWI_VoltPowersupplyFilt_ECUB  is higher than PAR_Voltfunction_Low,DEF_ShlPwrOutOfRange_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,1,,,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+103.0,LAMP_ECU_DEF_103,1.0,I_INFS_Signal_Management,YES,,,,Function loss,Safety relevant,DEF_INFSStsInWork,INFS signal of working state.,INFS signal ,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Bumper1_Activ",,,,1D,"For DC signal Depend on PAR_INFSWorkDCType:Type of validated signal 
+Type0: Low Level signal  or PWM signal validated(TRUE),
+Type1: High Level signal or PWM signal validated(TRUE), 
+For PWM signal:
+Frequency: Out of range PAR_INFSFreqNormalMin to PAR_INFSFreqNormalMax,
+ Duty cycle: Out of PAR_INFSPwmDcyMin to PAR_INFSPwmDcyMax
+","For DC signal Depend on PAR_INFSWorkDCType:Type of validated signal 
+Type0: High Level signal unvalidated(FALSE).
+Type1:  Low Level signal unvalidated(FALSE).
+For PWM signal:
+Frequency: In range PAR_INFSFreqNormalMin to PAR_INFSFreqNormalMax,
+ Duty cycle: In PAR_INFSPwmDcyMin to PAR_INFSPwmDcyMax
+",DEF_INFSStsInWork_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+104.0,LAMP_ECU_DEF_104,1.0,I_INFS_Signal_Management,YES,,,,Function loss,Safety relevant,DEF_INFSStsNoWork,INFS signal of Not working state.,INFS signal ,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ diagnostic supression time has elapsed
+AND
+Bumper1_Activ",,,,1D,"Depend on PAR_INFSNoWorkType:Type of validated signal 
+Type0: Low Level signal  or PWM signal validated(TRUE),
+Type1: High Level signal or PWM signal validated(TRUE), 
+","Depend on PAR_INFSNoWorkType:Type of validated signal 
+Type0: High Level signal  validated(TRUE),
+Type1: Low Level signal validated(TRUE), 
+",DEF_INFSStsNoWork_Absent,960.0,-1024.0,1.0,1024.0,10.0,9600.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+105.0,LAMP_ECU_DEF_105,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func1,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+106.0,LAMP_ECU_DEF_106,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func2,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+107.0,LAMP_ECU_DEF_107,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func3,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+108.0,LAMP_ECU_DEF_108,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func4,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+109.0,LAMP_ECU_DEF_109,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func5,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func5_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+110.0,LAMP_ECU_DEF_110,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func6,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func6_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+111.0,LAMP_ECU_DEF_111,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func7,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func7_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+112.0,LAMP_ECU_DEF_112,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func8,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func8_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+113.0,LAMP_ECU_DEF_113,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func9,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func9_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+114.0,LAMP_ECU_DEF_114,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func10,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func10_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+115.0,LAMP_ECU_DEF_115,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func11,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func11_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+116.0,LAMP_ECU_DEF_116,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func12,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func12_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+117.0,LAMP_ECU_DEF_117,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func13,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func13_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+118.0,LAMP_ECU_DEF_118,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func14,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func14_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+119.0,LAMP_ECU_DEF_119,1.0,F_Matrix_Controller_Management,YES,,,,Function loss,Safety relevant,DEF_LED_OCSC_Func15,"Function LED defect flag
+""j"" is the value from 1 to 15, means the index of 15 functions.",MLC data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ Function X is activated
+AND
+ diagnostic supression time has elapsed",Never,,HW,2D,"Function control by MLC, OC or SC failure detected.","Function control by MLC, OC and SC failure not detected.",DEF_LED_OCSC_Func15_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,500,3,50,500,1,remove fault inhibition,50,0,100,1,2,10,
+120.0,LAMP_ECU_DEF_120,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_CFAIL_MLC_1,"Charge pump fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"CFAIL equal to 1, ",CFAIL equal to 0,DEF_CFAIL_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+121.0,LAMP_ECU_DEF_121,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_CFAIL_MLC_2,"Charge pump fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"CFAIL equal to 1, ",CFAIL equal to 0,DEF_CFAIL_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+122.0,LAMP_ECU_DEF_122,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_CFAIL_MLC_3,"Charge pump fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"CFAIL equal to 1, ",CFAIL equal to 0,DEF_CFAIL_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+123.0,LAMP_ECU_DEF_123,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_CFAIL_MLC_4,"Charge pump fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"CFAIL equal to 1, ",CFAIL equal to 0,DEF_CFAIL_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,0,,,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+124.0,LAMP_ECU_DEF_124,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW1_MLC_1,"Over temperature warning 1 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW1 equal to 1, ",OTW1 equal to 0,DEF_OTW1_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+125.0,LAMP_ECU_DEF_125,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW1_MLC_2,"Over temperature warning 1 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW1 equal to 1, ",OTW1 equal to 0,DEF_OTW1_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+126.0,LAMP_ECU_DEF_126,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW1_MLC_3,"Over temperature warning 1 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW1 equal to 1, ",OTW1 equal to 0,DEF_OTW1_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+127.0,LAMP_ECU_DEF_127,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW1_MLC_4,"Over temperature warning 1 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW1 equal to 1, ",OTW1 equal to 0,DEF_OTW1_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+128.0,LAMP_ECU_DEF_128,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW2_MLC_1,"Over temperature warning 2 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW2 equal to 1, ",OTW2 equal to 0,DEF_OTW2_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+129.0,LAMP_ECU_DEF_129,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW2_MLC_2,"Over temperature warning 2 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW2 equal to 1, ",OTW2 equal to 0,DEF_OTW2_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+130.0,LAMP_ECU_DEF_130,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW2_MLC_3,"Over temperature warning 2 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW2 equal to 1, ",OTW2 equal to 0,DEF_OTW2_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+131.0,LAMP_ECU_DEF_131,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_OTW2_MLC_4,"Over temperature warning 2 fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"OTW2 equal to 1, ",OTW2 equal to 0,DEF_OTW2_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+132.0,LAMP_ECU_DEF_132,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_POK_MLC_1,"Not working normal flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"POK equal to 0, ",POK equal to 1,DEF_POK_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+133.0,LAMP_ECU_DEF_133,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_POK_MLC_2,"Not working normal flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"POK equal to 0, ",POK equal to 1,DEF_POK_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+134.0,LAMP_ECU_DEF_134,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_POK_MLC_3,"Not working normal flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"POK equal to 0, ",POK equal to 1,DEF_POK_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+135.0,LAMP_ECU_DEF_135,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_POK_MLC_4,"Not working normal flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"POK equal to 0, ",POK equal to 1,DEF_POK_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+136.0,LAMP_ECU_DEF_136,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LHM_MLC_1,"Limp-home mode flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"LHM equal to 1, ",LHM equal to 0,DEF_LHM_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+137.0,LAMP_ECU_DEF_137,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LHM_MLC_2,"Limp-home mode flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"LHM equal to 1, ",LHM equal to 0,DEF_LHM_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+138.0,LAMP_ECU_DEF_138,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LHM_MLC_3,"Limp-home mode flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"LHM equal to 1, ",LHM equal to 0,DEF_LHM_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+139.0,LAMP_ECU_DEF_139,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LHM_MLC_4,"Limp-home mode flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"LHM equal to 1, ",LHM equal to 0,DEF_LHM_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+140.0,LAMP_ECU_DEF_140,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_TBOF_MLC_1,"TXD buffer overflow flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"TBOF equal to 1, ",TBOF equal to 0,DEF_TBOF_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+141.0,LAMP_ECU_DEF_141,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_TBOF_MLC_2,"TXD buffer overflow flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"TBOF equal to 1, ",TBOF equal to 0,DEF_TBOF_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+142.0,LAMP_ECU_DEF_142,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_TBOF_MLC_3,"TXD buffer overflow flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"TBOF equal to 1, ",TBOF equal to 0,DEF_TBOF_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+143.0,LAMP_ECU_DEF_143,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_TBOF_MLC_4,"TXD buffer overflow flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"TBOF equal to 1, ",TBOF equal to 0,DEF_TBOF_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+144.0,LAMP_ECU_DEF_144,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_IDFAIL_MLC_1,"ID Resistor fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"IDFAIL equal to 1, ",IDFAIL equal to 0,DEF_IDFAIL_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,,,0.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+145.0,LAMP_ECU_DEF_145,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_IDFAIL_MLC_2,"ID Resistor fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"IDFAIL equal to 1, ",IDFAIL equal to 0,DEF_IDFAIL_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,,,0.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+146.0,LAMP_ECU_DEF_146,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_IDFAIL_MLC_3,"ID Resistor fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"IDFAIL equal to 1, ",IDFAIL equal to 0,DEF_IDFAIL_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,,,0.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+147.0,LAMP_ECU_DEF_147,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_IDFAIL_MLC_4,"ID Resistor fail flag of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,"IDFAIL equal to 1, ",IDFAIL equal to 0,DEF_IDFAIL_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,,,0.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+148.0,LAMP_ECU_DEF_148,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ARY1S14_MLC_1,"Frame loss flag of ARY1S14 of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,In case driver not receives this IC status respond frame from MLX_X,In case driver receives this  respond frame from MLX_X,DEF_FRAME_LOSS_ARY1S14_MLC_1_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+149.0,LAMP_ECU_DEF_149,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ARY1S14_MLC_2,"Frame loss flag of ARY1S14（TI) of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,In case driver not receives this IC status respond frame from MLX_X,In case driver receives this  respond frame from MLX_X,DEF_FRAME_LOSS_ARY1S14_MLC_2_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+150.0,LAMP_ECU_DEF_150,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ARY1S14_MLC_3,"Frame loss flag of ARY1S14 of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,In case driver not receives this IC status respond frame from MLX_X,In case driver receives this  respond frame from MLX_X,DEF_FRAME_LOSS_ARY1S14_MLC_3_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+151.0,LAMP_ECU_DEF_151,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ARY1S14_MLC_4,"Frame loss flag of ARY1S14 of MLC_X, X from 1 to PAR_MaxNumberOfMlc",Local CAN data read from MLC,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,In case driver not receives this IC status respond frame from MLX_X,In case driver receives this  respond frame from MLX_X,DEF_FRAME_LOSS_ARY1S14_MLC_4_Absent,960.0,-1024.0,10.0,1024.0,10.0,960.0,20.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+152.0,LAMP_ECU_DEF_152,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_PDC1G01,Frame loss defect flag for frame PDC1G01,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame PDC1G01,Frame respond of frame PDC1G01,DEF_FRAME_LOSS_PDC1G01_Absent,127.0,-128.0,16.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+153.0,LAMP_ECU_DEF_153,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ZN11S19_SHORT,Frame loss defect flag for frame ZN11S19 in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ZN11S19(short time),Frame respond of frame ZN11S19(short time),DEF_FRAME_LOSS_ZN11S19_SHORT_Absent,127.0,-128.0,50.0,255.0,1200.0,3600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+154.0,LAMP_ECU_DEF_154,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ZN11S19_LONG,Frame loss defect flag for frame ZN11S19 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ZN11S19(long time),Frame respond of frame ZN11S19(long time),DEF_FRAME_LOSS_ZN11S19_LONG_Absent,127.0,-128.0,16.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+155.0,LAMP_ECU_DEF_155,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_BDB1F01,Frame loss defect flag for frame BDB1F01 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame BDB1F01,Frame respond of frame BDB1F01,DEF_FRAME_LOSS_BDB1F01_Absent,127.0,-128.0,16.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+156.0,LAMP_ECU_DEF_156,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S10_short,Frame loss defect flag for frame ADU1S10 in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ADU1S10,Frame respond of frame ADU1S10,DEF_FRAME_LOSS_ADU1S10_short_Absent,1023.0,-1024.0,110.0,255.0,100.0,1000.0,900.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+157.0,LAMP_ECU_DEF_157,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S10_long,Frame loss defect flag for frame ADU1S10 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ADU1S10,Frame respond of frame ADU1S10,DEF_FRAME_LOSS_ADU1S10_long_Absent,960.0,-1024.0,10.0,255.0,100.0,9600.0,800.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+157.0,LAMP_ECU_DEF_158,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S11_short,Frame loss defect flag for frame ADU1S11   in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  ADU1S11 ,Frame respond of frame frame ADU1S11 correctly,DEF_FRAME_LOSS_ADU1S11_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+159.0,LAMP_ECU_DEF_159,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S11_long,Frame loss defect flag for frame ADU1S11   in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  ADU1S11 ,Frame respond of frame frame ADU1S11 correctly,DEF_FRAME_LOSS_ADU1S11_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+160.0,LAMP_ECU_DEF_160,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S12_short,Frame loss defect flag for frame  ADU1S12  in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  ADU1S12 ,Frame respond of frame frame  ADU1S12  correctly,DEF_FRAME_LOSS_ADU1S12_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+161.0,LAMP_ECU_DEF_161,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S12_long,Frame loss defect flag for frame  ADU1S12  in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  ADU1S12 ,Frame respond of frame frame  ADU1S12  correctly,DEF_FRAME_LOSS_ADU1S12_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+162.0,LAMP_ECU_DEF_162,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S13_short,Frame loss defect flag for frame  ADU1S13   in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S13 ,Frame respond of frame frame  ADU1S13  correctly,DEF_FRAME_LOSS_ADU1S13_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+163.0,LAMP_ECU_DEF_163,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S13_long,Frame loss defect flag for frame  ADU1S13   in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S13 ,Frame respond of frame frame  ADU1S13  correctly,DEF_FRAME_LOSS_ADU1S13_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+164.0,LAMP_ECU_DEF_164,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S14_short,Frame loss defect flag for frame  ADU1S14   in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S14,Frame respond of frame frame ADU1S14  correctly,DEF_FRAME_LOSS_ADU1S14_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+165.0,LAMP_ECU_DEF_165,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S14_long,Frame loss defect flag for frame  ADU1S14   in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S14,Frame respond of frame frame ADU1S14  correctly,DEF_FRAME_LOSS_ADU1S14_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+166.0,LAMP_ECU_DEF_166,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S15_short,Frame loss defect flag for frame  ADU1S15   in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S15 ,Frame respond of frame frame ADU1S15  correctly,DEF_FRAME_LOSS_ADU1S15_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+167.0,LAMP_ECU_DEF_167,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S15_long,Frame loss defect flag for frame  ADU1S15   in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S15 ,Frame respond of frame frame ADU1S15  correctly,DEF_FRAME_LOSS_ADU1S15_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+168.0,LAMP_ECU_DEF_168,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S16_short,Frame loss defect flag for frame  ADU1S16  in short time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S16,Frame respond of frame frame  ADU1S16 correctly,DEF_FRAME_LOSS_ADU1S16_short_Absent,127.0,-128.0,13.0,255.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+163.0,LAMP_ECU_DEF_163,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S16_long,Frame loss defect flag for frame  ADU1S16  in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ADU1S16,Frame respond of frame frame  ADU1S16 correctly,DEF_FRAME_LOSS_ADU1S16_long_Absent,127.0,-128.0,7.0,255.0,100.0,1900.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+164.0,LAMP_ECU_DEF_164,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S17_short,Frame loss defect flag for frame ADU1S17 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ADU1S17,Frame respond of frame ADU1S17,DEF_FRAME_LOSS_ADU1S17_short_Absent,127.0,-128.0,45.0,255.0,1200.0,3600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+165.0,LAMP_ECU_DEF_165,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_ADU1S17_long,Frame loss defect flag for frame ADU1S17 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame ADU1S17,Frame respond of frame ADU1S17,DEF_FRAME_LOSS_ADU1S17_long_Absent,127.0,-128.0,18.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+166.0,LAMP_ECU_DEF_166,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_VSC1G13,Frame loss defect flag for frame  VSC1G13  in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   VSC1G13,Frame respond of frame frame VSC1G13 correctly,DEF_FRAME_LOSS_VSC1G13_Absent,1023.0,-1024.0,110.0,1024.0,100.0,1000.0,200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+167.0,LAMP_ECU_DEF_167,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_BDB1S08,Frame loss defect flag for frame  BDB1S08  in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   BDB1S08,Frame respond of frame frameBDB1S08 correctly,DEF_FRAME_LOSS_BDB1S08_Absent,127.0,-128.0,18.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+168.0,LAMP_ECU_DEF_168,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,"DEF_FRAME_LOSS_ZN11S42
+",Frame loss defect flag for frame  ZN11S42  in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame   ZN11S42,Frame respond of frame frame ZN11S42 correctly,DEF_FRAME_LOSS_ZN11S42_Absent,127.0,-128.0,18.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+169.0,LAMP_ECU_DEF_169,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_GlobalCan_Error,Global CAN Bus off Error,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Bus off,Bus off recover,DEF_GlobalCan_Error_Absent,1023.0,-1024.0,11.0,2048.0,100.0,9300.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+170.0,LAMP_ECU_DEF_170,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LocalCan_Error,Local CAN Bus off Error,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Bus off,Bus off recover,DEF_LocalCan_Error_Absent,1023.0,-1024.0,110.0,2048.0,100.0,1000.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+171.0,LAMP_ECU_DEF_171,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_TNS_ERROR_LTi,Frame State of Left TI confilt with the TNS signal ,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,TNLS_ST= 0*1b && DIAC_BoolRawSigInput_TIsignal=FALSE,TNLS_ST= 0*0b or DIAC_BoolRawSigInput_TIsignal=TRUE,DEF_TNS_ERROR_LTi_Absent,960.0,-1024.0,5.0,1024.0,10.0,1920.0,20.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+172.0,LAMP_ECU_DEF_172,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_TNS_ERROR_RTi,Frame State of Right TI confilt with the TNS signal ,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,TNLS_ST= 01*b && DIAC_BoolRawSigInput_TIsignal=FALSE,TNLS_ST= 00*b or DIAC_BoolRawSigInput_TIsignal=TRUE,DEF_TNS_ERROR_RTi_Absent,960.0,-1024.0,5.0,1024.0,10.0,1920.0,20.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,500,5000,3,500,5000,1,remove fault inhibition,50,0,100,1,2,10,
+173.0,LAMP_ECU_DEF_173,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_GCan_RAM,Global CAN RAM  Error,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,DEF_GCan_RAM is RawDetected,DEF_GCan_RAM is RawNotDetected,DEF_GCan_RAM_Absent,127.0,-255.0,64.0,255.0,10.0,20.0,20.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,50,3,5,50,1,remove fault inhibition,50,0,100,1,2,10,
+174.0,LAMP_ECU_DEF_174,1.0,F_CAN_Management_Local_CAN,YES,,,,Function loss,Safety relevant,DEF_LCan_RAM,Local CAN RAM  Error,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,DEF_LCan_RAM is RawDetected,DEF_LCan_RAM is RawNotDetected,DEF_LCan_RAM_Absent,127.0,-255.0,64.0,255.0,10.0,20.0,20.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,50,3,5,50,1,remove fault inhibition,50,0,100,1,2,10,
+175.0,LAMP_ECU_DEF_175,1.0,SyRS,YES,,,,Function loss,Safety relevant,DEF_Nvm_Error,NVM check  Error During the Initialization,MCU data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,NVM check Error,NVM check OK,DEF_Nvm_Error_Absent,127.0,-128.0,127.0,255.0,100.0,100.0,100.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,5000,3,50,5000,1,remove fault inhibition,50,0,100,1,2,100,
+176.0,LAMP_ECU_DEF_176,1.0,SyRS,YES,,,,Function loss,Safety relevant,DEF_Rom_Error,ROM check  Error During the Initialization,MCU data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,ROM check Error,ROM check OK,DEF_Rom_Error_Absent,127.0,-128.0,127.0,255.0,100.0,100.0,100.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,50,5000,3,50,5000,1,remove fault inhibition,50,0,100,1,2,100,
+177.0,LAMP_ECU_DEF_177,1.0,F_Destiantion_Management,YES,,,,Function loss,Safety relevant,DEF_VehSpec_NotMatch,Write destination spec is different from the read back destination.,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Destination write and read back not Match,Destination write and read back Match,DEF_VehSpec_NotMatch_Absent,127.0,-128.0,2.0,255.0,1200.0,76800.0,1200.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,6000,3,5,6000,1,remove fault inhibition,50,0,100,1,2,1200,
+178.0,LAMP_ECU_DEF_178,1.0,F_Destiantion_Management,YES,,,,Function loss,Safety relevant,DEF_Dest_written_NVM ,Write destination spec is different from the read back destination.,MCU data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,The Destination failure to written in the NVM,The Destination sucess to written in the NVM,DEF_Dest_written_NVM_Absent,127.0,-128.0,50.0,255.0,1200.0,3600.0,1200.0,,0,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,1.0,0.0, Condition_GENERAL_UV_OV  / smart is present on the board,5,6000,3,5,6000,1,remove fault inhibition,50,0,100,1,2,1200,
+179.0,LAMP_ECU_DEF_179,1.0,F_CAN_Management_Global_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_BDB1F03,Frame loss defect flag for frame BDB1F03 in long time,Global CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame BDB1F03,Frame respond of frame BDB1F03,DEF_FRAME_LOSS_BDB1F03_Absent,127.0,-128.0,18.0,255.0,1200.0,9600.0,1200.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+180.0,LAMP_ECU_DEF_180,1.0,F_CAN_Management_Loca_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_HD_AFS1S01,Frame loss defect flag for HD frame  AFS1S01,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed
+AND
+IGR_PDC is ON",Never,,HW,1D,Frame loss of frame  AFS1S01,Frame respond of frame frame AFS1S01 correctly,DEF_FRAME_LOSS_HD_AFS1S01_Absent,1023.0,-1024.0,100.0,2048.0,100.0,1100.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+181.0,LAMP_ECU_DEF_181,1.0,F_CAN_Management_Loca_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_HD_LPS1S01,Frame loss defect flag for HD frame  LPS1S01,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed
+AND
+IGR_PDC is ON",Never,,HW,1D,Frame loss of frame  LPS1S01,Frame respond of frame frame LPS1S01 correctly,DEF_FRAME_LOSS_HD_LPS1S01_Absent,1023.0,-1024.0,100.0,2048.0,100.0,1100.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+182.0,LAMP_ECU_DEF_182,1.0,F_Gateway_Management,YES,,,,Function loss,Safety relevant,DEF_AHS_HD_Temporary_failure,HD failure defect flag for the AHS HD failure frame bit,Gateway data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Failure bit is true,Failure bit is false,DEF_AHS_HD_Temporary_failure_Absent,127.0,-128.0,127.0,255.0,1.0,1.0,1.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+183.0,LAMP_ECU_DEF_183,1.0,F_Gateway_Management,YES,,,,Function loss,Safety relevant,DEF_AHS_HD_failure,HD failure defect flag for the AHS HD failure frame bit,Gateway data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Failure bit is true,Failure bit is false,DEF_AHS_HD_failure_Absent,127.0,-128.0,127.0,255.0,1.0,1.0,1.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+184.0,LAMP_ECU_DEF_184,1.0,I_Power Supply Interface,YES,,,,Power range with function loss,Safety relevant,DEF_DRIVER_ELEC_UV_COMM_ECUB,General UV_COMM for Driver,Selected power input voltage  (depends on which switch is closed / open),HW,"Def_Driver_ELEC_RANGEREADYNESS is confirmed 
+and 
+Power Present",Never,never,HW,1D,Measured voltage at input is lower than PAR_UV_COMMValidThreshold,Measured voltage at input is higher than PAR_UV_COMMunValidThreshold,DEF_Driver_ELEC_UV_COMM_absent,127.0,-128.0,4.0,7.0,5.0,160.0,185.0,"Switch OFF boost / buck
+freeze Steppers
+Switch off Smart
+",1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+185.0,LAMP_ECU_DEF_185,1.0,I_Power Supply Interface,YES,,,,Power range with function loss,Safety relevant,DEF_DRIVER_ELEC_OV_COMM_ECUB,General OV_COMM for Driver,Slected power input voltage  (depends on which switch is closed / open),HW,"Def_Driver_ELEC_RANGEREADYNESS is confirmed 
+and 
+Power Present",Never,never,HW,1D,Measured voltage at input is higher than PAR_OV_COMMValidThreshold,Measured voltage at input is lower than PAR_OV_COMMunValidThreshold,DEF_Driver_ELEC_OV_COMM_absent,127.0,-128.0,4.0,7.0,5.0,160.0,185.0,"Switch OFF boost / buck
+Switch OFF Steppers
+Sxitch off smart",1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,
+186.0,LAMP_ECU_DEF_186,1.0,I_Power Supply Interface,YES,,,,Power range with function loss,Safety relevant,DEF_ECUB_Error,General the ECUB voltage error for Driver,Slected power input voltage  (depends on which switch is closed / open),HW,Always,Never,never,HW,1D,Measured voltage at input is lower than PAR_VoltErrorValidThreshold,Measured voltage at input is higher than PAR_VoltErrorunValidThreshold,DEF_ECUB_Error_absent,2047.0,-2048.0,1.0,127.0,5.0,10235.0,165.0,"Switch OFF boost / buck
+Switch OFF Steppers
+Sxitch off smart",1,"OV flag if provided in DBC
+Function status flag",OV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+187.0,LAMP_ECU_DEF_187,1.0,F_CAN_Management_Loca_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_HD_LW_STATUS,Frame loss defect flag for HD frame  LW_STATUS,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  LW_STATUS,Frame respond of frame LW_STATUS correctly,DEF_FRAME_LOSS_HD_LW_STATUS_Absent,1023.0,-1024.0,100.0,2048.0,100.0,1100.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4
+188.0,LAMP_ECU_DEF_188,1.0,F_CAN_Management_Loca_CAN,YES,,,,Function loss,Safety relevant,DEF_FRAME_LOSS_HD_RW_STATUS,Frame loss defect flag for HD frame  RW_STATUS,Local CAN data,,"Condition_GENERAL_UV_OV  AND DEF_Driver_ELEC_RANGEREADINESS_absent
+AND
+ECUB_voltage_Range_ 8V_ to_18V
+AND
+ diagnostic supression time has elapsed",Never,,HW,1D,Frame loss of frame  RW_STATUS,Frame respond of frame RW_STATUS correctly,DEF_FRAME_LOSS_HD_RW_STATUS_Absent,1023.0,-1024.0,100.0,2048.0,100.0,1100.0,100.0,,1,"UV flag if provided in DBC
+Function status flag
+",UV DTC if provided,0.0,0.0,,-,-,-,-,-,-,-,-,-,-,-,-,-,AFV4

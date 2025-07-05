@@ -1,0 +1,14 @@
+excel_input_path: "data/input/2ST220004-0299-685-3.0_Error_Handler_DataBase_TOYOTA_Lamp_ECU GEN4.xlsx"
+intermediate_folder: "data/intermediate"
+output_folder: "data/output"
+log_file: "logs/run.log"
+summary_file: "logs/generation_summary.txt"
+sheets_to_process:
+  - Defect Database
+  - Defect running condition matrix
+  - Defect retry condition matrix
+  - Defect Frozen condition matrix
+  - Defect Stop condition matrix
+  # - Defect Reinitialize condition matrix
+  - FIM action matrix
+  - Defect retry action matrix
