@@ -1,14 +1,91 @@
-excel_input_path: "data/input/2ST220004-0299-685-3.0_Error_Handler_DataBase_TOYOTA_Lamp_ECU GEN4.xlsx"
-intermediate_folder: "data/intermediate"
+# --- YAML Config for Defect Handler Generator ---
+name: "defect_handler_generator"  # Package Name
+author: "Osama ElMorady"          # Author for this project
+version: "01.00.00"               # Script version (major.minor.patch)
+
+#  Path to the folder where input Excel files are located
+input_folder: "data/input"
+#  Directory for storing intermediate outputs (e.g., CSVs for each sheet)
+intermediate_folder: "data/Intermediate"
+# Directory where final output files (Excel, CSV) will be saved
 output_folder: "data/output"
+
+
+#  List of sheet names to extract from input Excel files
+# Comment out sheets you don't want to process using `#`
+input_files_to_process:
+  #  Excel file to be processed (full or relative path)
+  excel_workbook: 
+    name: "2ST220004-0299-685-3.1_Error_Handler_DataBase_TOYOTA_Lamp_ECU GEN4.xlsx"
+
+  #  Excel sheets to be processed
+  excel_worksheets:
+    database_matrix: 
+      name: "Defect Database"
+      header: 0
+      skiprows: 0
+
+    running_condition_matrix: 
+      name: "Defect running condition matrix"
+      header: 0
+      skiprows: 1
+
+    retry_condition_matrix:  
+      name: "Defect retry condition matrix"
+      header: 0
+      skiprows: 1
+
+    frozen_condition_matrix:  
+      name: "Defect Frozen condition matrix"
+      header: 0
+      skiprows: 1
+
+    stop_condition_matrix:  
+      name: "Defect Stop condition matrix"
+      header: 0
+      skiprows: 1
+
+    reinitialize_condition_matrix:  
+      name: "Defect Reinitialize condition m"
+      header: 0
+      skiprows: 1
+
+    fim_action_matrix:  
+      name: "FIM action matrix"
+      header: 0
+      skiprows: 1
+
+    retry_action_matrix:  
+      name: "Defect retry action matrix"
+      header: 0
+      skiprows: 1
+
+
+
+
+
+
+# #  Names of the sheets to generate in the output Excel file
+# # These could be derived/processed from input sheets
+# output_sheets_to_generate:
+#   - Ydemx
+#   - Defect running condition matrix Modified
+#   - Defect retry condition matrix Modified
+#   - Defect Frozen condition matrix Modified
+#   - Defect Stop condition matrix Modified
+#   - Defect Reinitialize condition matrix Modified
+#   - Events Thresholds Main
+#   - Events Thresholds Ordered
+#   - Actions_E_D
+#   - Actions_E_D_xxxx
+#   - Actions_Retry_E_D
+#   - Actions_Retry_E_D_xxxxx
+
+#  Path to the runtime log file (useful for debugging)
 log_file: "logs/run.log"
-summary_file: "logs/generation_summary.txt"
-sheets_to_process:
-  - Defect Database
-  - Defect running condition matrix
-  - Defect retry condition matrix
-  - Defect Frozen condition matrix
-  - Defect Stop condition matrix
-  # - Defect Reinitialize condition matrix
-  - FIM action matrix
-  - Defect retry action matrix
+
+#  File path for the summary report after generation
+# This contains timestamps, success messages, or missing sheet reports
+generation_summary_file: "logs/generation_summary.txt"
+
+manifest-template-version: "1.0"
