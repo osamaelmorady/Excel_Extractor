@@ -16,6 +16,17 @@ def excel_row_to_index(row: str) -> int:
     """Convert Excel row number (e.g., '1') to zero-based index."""
     return int(row) - 1
 
+def parse_excel_cell(cell):
+    """
+    Parses Excel-style cell (e.g., 'B4') into (row_index, column_label).
+    """
+    match = re.fullmatch(r"([A-Za-z]+)([0-9]+)", cell.strip())
+    if not match:
+        raise ValueError(f"Invalid Excel cell format: '{cell}'")
+    col_letters, row_letters = match.groups()
+    return row_letters, col_letters.upper()
+
+
 
 
 class WorksheetHandler:
@@ -62,46 +73,98 @@ class WorksheetHandler:
         # with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
         #     self.data.to_excel(writer, index=False, sheet_name=self.sheet_name)
             
-            
-    # --------------------- Add/remove/read methods ---------------------
-    def read_region(self, start_point, end_point):   
-        def parse_cell(cell):
-            match = re.match(r"([A-Za-z]+)([0-9]+)", cell)
-            if not match:
-                raise ValueError(f"Invalid Excel cell format: '{cell}'")
-            col_letters, row_number = match.groups()
-            return int(row_number) - 1, excel_col_to_index(col_letters)  # row, col
+    #######################################################################        
+    # --------------------- Add/remove/read methods --------------------- #
+    #######################################################################
+    def set_row_values(self, row_str, values):
+        """ Example sheet.set_row_values("4", ["x", 1.1, "Enabled"]) """
+        """Set full row using Excel-style row number, filling from left (first column)."""
+        row_idx = excel_row_to_index(row_str)
+        if len(values) > len(self.data.columns):
+            raise ValueError("❌ Too many values for row length.")
+
+        for i, value in enumerate(values):
+            col = self.data.columns[i]
+            self.data.at[row_idx, col] = value
+
+    def get_row_values(self, row_str):
+        """Get full row as list from left to right."""
+        row_idx = excel_row_to_index(row_str)
+        return self.data.iloc[row_idx].tolist()
+
+    def set_column_values(self, col_str, values):
+        """ Example sheet.set_column_values("B", [1, 2, 3, 4]) """
+        """Set full column using Excel-style letter, top-down."""
+        col_label = excel_col_to_index(col_str)
+        if len(values) != len(self.data):
+            raise ValueError("❌ Column length must match number of rows.")
+        self.data[col_label] = values
+
+    def get_column_values(self, col_str):
+        """Get full column as list from top to bottom."""
+        col_label = excel_col_to_index(col_str)
+        return self.data[col_label].tolist()
+
     
-        start_row, start_col = parse_cell(start_point)
-        end_row, end_col = parse_cell(end_point)
+    def get_region(self, start_point, end_point):
+        """Example : self.get_region("A1", "C3")"""
+        start_row, start_col = parse_excel_cell(start_point)
+        end_row, end_col = parse_excel_cell(end_point)
+        
+        start_row_loc = excel_row_to_index(start_row)
+        end_row_loc = excel_row_to_index(end_row)
+        start_col_loc = excel_col_to_index(start_col)
+        end_col_loc = excel_col_to_index(end_col)
+
+        return self.data.iloc[start_row_loc:end_row_loc + 1, start_col_loc:end_col_loc + 1].copy(deep=True)
+
     
-        return self.data.iloc[start_row:end_row + 1, start_col:end_col + 1].copy(deep=True)
+    def set_region(self, start_cell, end_cell, values_2d):
+        """Example : self.set_region("A1", "C3", values_2d)"""
+        start_row, start_col = parse_excel_cell(start_cell)
+        end_row, end_col = parse_excel_cell(end_cell)
+        
+        start_row_loc = excel_row_to_index(start_row)
+        end_row_loc = excel_row_to_index(end_row)
+        start_col_loc = excel_col_to_index(start_col)
+        end_col_loc = excel_col_to_index(end_col)
+        
+        for i, row_val in enumerate(range(start_row_loc, end_row_loc + 1)):
+            for j, col_val in enumerate(range(start_col_loc, end_col_loc + 1)):
+                self.data.iat[row_val, col_val] = values_2d[i][j]
     
     
     # Add a new column at a given Excel column label (e.g., 'D')
-    def add_column(self, col_letter, default_value=None):
-        col_index = excel_col_to_index(col_letter)
+    def add_column(self, col_str, default_value=None, col_new_name=None):
+        """Example : self.add_column("A", values_2d)"""
+        col_index = excel_col_to_index(col_str)
+
         if col_index > len(self.data.columns):
-            raise IndexError(f"Column '{col_letter}' is out of bounds.")
+            raise IndexError(f"Column '{col_str}' is out of bounds.")
 
-        new_col_name = f"Column_{col_letter}"
-        self.data.insert(col_index, new_col_name, default_value)
+        if col_new_name is None:
+            col_new_name = f"{col_str}"  
 
+        self.data.insert(col_index, col_new_name, default_value)
 
     # Add a new row at a given Excel row number (e.g., '5')
-    def add_row(self, row_number, default_value=None):
-        row_index = excel_row_to_index(row_number)
+    def add_row(self, row_str, default_value=None):
+        """Example : self.add_row("A1", "C3", values_2d)"""
+        row_index = excel_row_to_index(row_str)
+
         if row_index > len(self.data):
-            raise IndexError(f"Row '{row_number}' is out of bounds.")
+            raise IndexError(f"Row '{row_str}' is out of bounds.")
 
         new_row = pd.Series(default_value, index=self.data.columns)
         top = self.data.iloc[:row_index]
         bottom = self.data.iloc[row_index:]
-        self.data = pd.concat([top, pd.DataFrame([new_row]), bottom], ignore_index=True)
 
+        # Maintain original index if needed
+        self.data = pd.concat([top, pd.DataFrame([new_row]), bottom]).reset_index(drop=True)
 
     # Remove column by Excel letter, e.g., 'C'
     def remove_column(self, col_letter):     
+        """Example : self.remove_column("A1", "C3", values_2d)"""
         col_index = excel_col_to_index(col_letter)
         if col_index >= len(self.data.columns):
             raise IndexError(f"Column '{col_letter}' is out of bounds.")
@@ -110,55 +173,109 @@ class WorksheetHandler:
         self.data.drop(columns=[col_name], inplace=True)
     
     # Remove row by Excel number, e.g., '5'
-    def remove_row(self, row_number):        
-        row_index = excel_row_to_index(row_number)
+    def remove_row(self, row_str): 
+        """Example : self.remove_row("A1", "C3", values_2d)"""       
+        row_index = excel_row_to_index(row_str)
         if 0 <= row_index < len(self.data):
             self.data.drop(index=row_index, inplace=True)
             self.data.reset_index(drop=True, inplace=True)
         else:
-            raise IndexError(f"Row '{row_number}' is out of bounds.")
-
-
+            raise IndexError(f"Row '{row_str}' is out of bounds.")
+        
+    #######################################################################
     # --------------------- Cell update methods ---------------------
-    def set_cell_value(self, row_index, column_name, value=None):
-        self.data.at[row_index, column_name] = value
+    #######################################################################
+    def set_cell_value(self, cell, value=None):
+        """Example : self.set_cell_value("B4", "ON")"""
+        row_str, column_str = parse_excel_cell(cell)
+        
+        row_index = excel_row_to_index(row_str)
+        col_index = excel_col_to_index(column_str)
+        
+        if row_index >= len(self.data) or col_index >= len(self.data.columns):
+            raise IndexError(f"Row '{row_str}' or column '{column_str}' is out of bounds.")
+        
+        col_label = self.data.columns[col_index]
+        
+        # Convert column to object dtype if not already (to support string assignment)
+        if self.data[col_label].dtype != 'object':
+            self.data[col_label] = self.data[col_label].astype('object')
 
-    def get_cell_value(self, row_index, column_name):
-        return self.data.at[row_index, column_name]
+        self.data.at[row_index, col_label] = value
+        
+    def get_cell_value(self, cell):
+        """Example : self.get_cell_value("B4")"""
+        row_str, column_str = parse_excel_cell(cell)
+        row_index = excel_row_to_index(row_str)
+        col_index = excel_col_to_index(column_str)
+        if row_index >= len(self.data) or col_index >= len(self.data.columns):
+            raise IndexError(f"Row '{row_str}' or column '{column_str}' is out of bounds.")
+        
+        col_label = self.data.columns[col_index]
+        
+        return self.data.at[row_index, col_label]
 
-    def set_row_values(self, row_index, new_row):
-        for col, val in new_row.items():
-            self.data.at[row_index, col] = val
-
-    def get_row_values(self, row_index):
-        return self.data.iloc[row_index].to_dict()
-
-    def set_column_values(self, column_name, new_values):
-        if len(new_values) != len(self.data):
-            raise ValueError("Length of new_values must match number of rows.")
-        self.data[column_name] = new_values
-
-    def get_column_values(self, column_name):
-        return self.data[column_name].tolist()
-
+    #######################################################################
     # --------------------- Manipulation methods ---------------------
-    def trim_spaces_in_row(self, row_index):
+    #######################################################################
+    def trim_spaces_in_cell(self, cell):
+        """Trim spaces from a specific cell if it's a string (e.g., 'B5')."""
+        row_str, col_str = parse_excel_cell(cell)
+        row_index = excel_row_to_index(row_str)
+        col_name = self.data.columns[excel_col_to_index(col_str)]
+        val = self.data.at[row_index, col_name]
+        if isinstance(val, str):
+            self.data.at[row_index, col_name] = val.strip()
+
+    def trim_spaces_in_row(self, row_str):
+        """Trims spaces in all string cells of a given Excel-style row (e.g., '5')."""
+        row_index = excel_row_to_index(row_str)
         for col in self.data.columns:
             val = self.data.at[row_index, col]
             if isinstance(val, str):
                 self.data.at[row_index, col] = val.strip()
 
-    def trim_spaces_in_column_by_index(self, col_index):
-        col_name = self.data.columns[col_index]
+    def trim_spaces_in_column(self, col_str):
+        """Trims spaces in all string cells of a given Excel-style column (e.g., 'B')."""
+        col_name = self.data.columns[excel_col_to_index(col_str)]
         self.data[col_name] = self.data[col_name].apply(lambda x: x.strip() if isinstance(x, str) else x)
 
-    def find_text_in_column(self, column, search_text):
-        return self.data[self.data[column].str.contains(search_text, case=False, na=False)]
 
-    def find_text_in_row(self, row_index, search_text):
+    def find_text_in_cell(self, cell, search_text):
+        """Check if a cell contains the given search text (case-insensitive)."""
+        row_str, col_str = parse_excel_cell(cell)
+        row_index = excel_row_to_index(row_str)
+        col_name = self.data.columns[excel_col_to_index(col_str)]
+        val = self.data.at[row_index, col_name]
+        return isinstance(val, str) and search_text.lower() in val.lower()
+
+
+    def find_text_in_column(self, col_str, search_text):
+        """Finds rows where a given Excel-style column (e.g., 'C') contains search_text."""
+        col_name = self.data.columns[excel_col_to_index(col_str)]
+        return self.data[self.data[col_name].str.contains(search_text, case=False, na=False)]
+
+    def find_text_in_row(self, row_str, search_text):
+        """Checks if search_text exists in any cell of a given Excel-style row (e.g., '4')."""
+        row_index = excel_row_to_index(row_str)
         return any(search_text.lower() in str(val).lower() for val in self.data.iloc[row_index])
 
+    def find_text_in_region(self, start_cell, end_cell, search_text):
+        """Search for text in a rectangular Excel-style region, case-insensitive.
+
+        Example: find_text_in_region("B4", "D10", "error")
+        Returns: True if found anywhere in the region
+        """
+        start_row, start_col = parse_excel_cell(start_cell)
+        end_row, end_col = parse_excel_cell(end_cell)
+
+        region = self.data.iloc[start_row:end_row + 1, start_col:end_col + 1]
+
+        return region.astype(str).applymap(lambda x: search_text.lower() in x.lower()).any().any()
+
+    #######################################################################
     # --------------------- Transformations ---------------------
+    #######################################################################
     def sort_rows(self, sort_key, reverse=False):
         self.data = self.data.sort_values(by=sort_key, ascending=not reverse).reset_index(drop=True)
 

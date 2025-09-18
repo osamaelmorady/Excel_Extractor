@@ -4,11 +4,11 @@ author: "Osama ElMorady"          # Author for this project
 version: "01.00.00"               # Script version (major.minor.patch)
 
 #  Path to the folder where input Excel files are located
-input_folder: "data/input"
+input_folder: "input_files"
 #  Directory for storing intermediate outputs (e.g., CSVs for each sheet)
-intermediate_folder: "data/Intermediate"
+intermediate_folder: "Intermediate_files"
 # Directory where final output files (Excel, CSV) will be saved
-output_folder: "data/output"
+output_folder: "output_files"
 
 
 #  List of sheet names to extract from input Excel files
